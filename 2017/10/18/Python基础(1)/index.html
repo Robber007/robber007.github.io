@@ -1,0 +1,897 @@
+<!DOCTYPE html>
+
+
+
+  
+
+
+<html class="theme-next mist use-motion" lang="zh-Hans">
+<head>
+  <meta charset="UTF-8"/>
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1"/>
+<meta name="theme-color" content="#222">
+
+
+
+  
+  
+    
+    
+  <script src="/lib/pace/pace.min.js?v=1.0.2"></script>
+  <link href="/lib/pace/pace-theme-minimal.min.css?v=1.0.2" rel="stylesheet">
+
+
+
+
+
+
+
+<meta http-equiv="Cache-Control" content="no-transform" />
+<meta http-equiv="Cache-Control" content="no-siteapp" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+  
+  
+  <link href="/lib/fancybox/source/jquery.fancybox.css?v=2.1.5" rel="stylesheet" type="text/css" />
+
+
+
+
+
+
+
+<link href="/lib/font-awesome/css/font-awesome.min.css?v=4.6.2" rel="stylesheet" type="text/css" />
+
+<link href="/css/main.css?v=5.1.3" rel="stylesheet" type="text/css" />
+
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png?v=5.1.3">
+
+
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png?v=5.1.3">
+
+
+  <link rel="mask-icon" href="/images/logo.svg?v=5.1.3" color="#222">
+
+
+
+
+
+  <meta name="keywords" content="字符编码 python数据类型," />
+
+
+
+
+
+
+
+
+
+
+<meta name="description" content="1.大概说字符编码参考资料廖雪峰博客—字符编码知乎–Unicode 和 UTF-8 有何区别？ 关键字比特（bit） 字节（byte） ASCII编码 GB2312 GBK GB18030 Unicode UTF-8廖大神已经写得很详细啦，我这边算做个非常简单的个人总结，知道 一下各个编码直接的情况及关系等，详细请参考廖大神博客及查找网上各种资料。美国人刚开始把自己的大小写英文字母，数字，一些符号">
+<meta name="keywords" content="字符编码 python数据类型">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Python基础(1)">
+<meta property="og:url" content="http://robber007.github.io/2017/10/18/Python基础(1)/index.html">
+<meta property="og:site_name" content="我爱吃西瓜">
+<meta property="og:description" content="1.大概说字符编码参考资料廖雪峰博客—字符编码知乎–Unicode 和 UTF-8 有何区别？ 关键字比特（bit） 字节（byte） ASCII编码 GB2312 GBK GB18030 Unicode UTF-8廖大神已经写得很详细啦，我这边算做个非常简单的个人总结，知道 一下各个编码直接的情况及关系等，详细请参考廖大神博客及查找网上各种资料。美国人刚开始把自己的大小写英文字母，数字，一些符号">
+<meta property="og:locale" content="zh-Hans">
+<meta property="og:updated_time" content="2017-10-23T06:21:20.051Z">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Python基础(1)">
+<meta name="twitter:description" content="1.大概说字符编码参考资料廖雪峰博客—字符编码知乎–Unicode 和 UTF-8 有何区别？ 关键字比特（bit） 字节（byte） ASCII编码 GB2312 GBK GB18030 Unicode UTF-8廖大神已经写得很详细啦，我这边算做个非常简单的个人总结，知道 一下各个编码直接的情况及关系等，详细请参考廖大神博客及查找网上各种资料。美国人刚开始把自己的大小写英文字母，数字，一些符号">
+
+
+
+<script type="text/javascript" id="hexo.configurations">
+  var NexT = window.NexT || {};
+  var CONFIG = {
+    root: '/',
+    scheme: 'Mist',
+    version: '5.1.3',
+    sidebar: {"position":"left","display":"post","offset":12,"b2t":false,"scrollpercent":false,"onmobile":false},
+    fancybox: true,
+    tabs: true,
+    motion: {"enable":true,"async":false,"transition":{"post_block":"fadeIn","post_header":"slideDownIn","post_body":"slideDownIn","coll_header":"slideLeftIn","sidebar":"slideUpIn"}},
+    duoshuo: {
+      userId: '0',
+      author: '博主'
+    },
+    algolia: {
+      applicationID: '',
+      apiKey: '',
+      indexName: '',
+      hits: {"per_page":10},
+      labels: {"input_placeholder":"Search for Posts","hits_empty":"We didn't find any results for the search: ${query}","hits_stats":"${hits} results found in ${time} ms"}
+    }
+  };
+</script>
+
+
+
+  <link rel="canonical" href="http://robber007.github.io/2017/10/18/Python基础(1)/"/>
+
+
+
+
+
+  <title>Python基础(1) | 我爱吃西瓜</title>
+  
+
+
+
+
+
+
+
+
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" lang="zh-Hans">
+
+  
+  
+    
+  
+
+  <div class="container sidebar-position-left page-post-detail">
+    <div class="headband"></div>
+    <header id="header" class="header" itemscope itemtype="http://schema.org/WPHeader">
+      <div class="header-inner"><div class="site-brand-wrapper">
+  <div class="site-meta ">
+    
+
+    <div class="custom-logo-site-title">
+      <a href="/"  class="brand" rel="start">
+        <span class="logo-line-before"><i></i></span>
+        <span class="site-title">我爱吃西瓜</span>
+        <span class="logo-line-after"><i></i></span>
+      </a>
+    </div>
+      
+        <p class="site-subtitle"></p>
+      
+  </div>
+
+  <div class="site-nav-toggle">
+    <button>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+      <span class="btn-bar"></span>
+    </button>
+  </div>
+</div>
+
+<nav class="site-nav">
+  
+
+  
+    <ul id="menu" class="menu">
+      
+        
+        <li class="menu-item menu-item-home">
+          <a href="/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-home"></i> <br />
+            
+            首页
+          </a>
+        </li>
+      
+        
+        <li class="menu-item menu-item-about">
+          <a href="/about/" rel="section">
+            
+              <i class="menu-item-icon fa fa-fw fa-user"></i> <br />
+            
+            关于
+          </a>
+        </li>
+      
+
+      
+    </ul>
+  
+
+  
+</nav>
+
+
+
+ </div>
+    </header>
+
+    <main id="main" class="main">
+      <div class="main-inner">
+        <div class="content-wrap">
+          <div id="content" class="content">
+            
+
+  <div id="posts" class="posts-expand">
+    
+
+  
+
+  
+  
+  
+
+  <article class="post post-type-normal" itemscope itemtype="http://schema.org/Article">
+  
+  
+  
+  <div class="post-block">
+    <link itemprop="mainEntityOfPage" href="http://robber007.github.io/2017/10/18/Python基础(1)/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="name" content="我爱吃西瓜">
+      <meta itemprop="description" content="">
+      <meta itemprop="image" content="/images/avatar.jpg">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="我爱吃西瓜">
+    </span>
+
+    
+      <header class="post-header">
+
+        
+        
+          <h1 class="post-title" itemprop="name headline">Python基础(1)</h1>
+        
+
+        <div class="post-meta">
+          <span class="post-time">
+            
+              <span class="post-meta-item-icon">
+                <i class="fa fa-calendar-o"></i>
+              </span>
+              
+                <span class="post-meta-item-text">发表于</span>
+              
+              <time title="创建于" itemprop="dateCreated datePublished" datetime="2017-10-18T09:49:29+08:00">
+                2017-10-18
+              </time>
+            
+
+            
+
+            
+          </span>
+
+          
+
+          
+            
+              <span class="post-comments-count">
+                <span class="post-meta-divider">|</span>
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-comment-o"></i>
+                </span>
+                <a href="/2017/10/18/Python基础(1)/#comments" itemprop="discussionUrl">
+                  <span class="post-comments-count disqus-comment-count"
+                        data-disqus-identifier="2017/10/18/Python基础(1)/" itemprop="commentCount"></span>
+                </a>
+              </span>
+            
+          
+
+          
+          
+
+          
+
+          
+            <div class="post-wordcount">
+              
+                
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-file-word-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">字数统计&#58;</span>
+                
+                <span title="字数统计">
+                  789
+                </span>
+              
+
+              
+                <span class="post-meta-divider">|</span>
+              
+
+              
+                <span class="post-meta-item-icon">
+                  <i class="fa fa-clock-o"></i>
+                </span>
+                
+                  <span class="post-meta-item-text">阅读时长 &asymp;</span>
+                
+                <span title="阅读时长">
+                  3
+                </span>
+              
+            </div>
+          
+
+          
+
+        </div>
+      </header>
+    
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+      
+
+      
+        <h2 id="1-大概说字符编码"><a href="#1-大概说字符编码" class="headerlink" title="1.大概说字符编码"></a>1.大概说字符编码</h2><h3 id="参考资料"><a href="#参考资料" class="headerlink" title="参考资料"></a>参考资料</h3><h3 id="廖雪峰博客—字符编码"><a href="#廖雪峰博客—字符编码" class="headerlink" title="廖雪峰博客—字符编码"></a><a href="https://www.liaoxuefeng.com/wiki/0014316089557264a6b348958f449949df42a6d3a2e542c000/001431664106267f12e9bef7ee14cf6a8776a479bdec9b9000" target="_blank" rel="external">廖雪峰博客—字符编码</a></h3><h3 id="知乎–Unicode-和-UTF-8-有何区别？"><a href="#知乎–Unicode-和-UTF-8-有何区别？" class="headerlink" title="知乎–Unicode 和 UTF-8 有何区别？"></a><a href="https://www.zhihu.com/question/23374078" target="_blank" rel="external">知乎–Unicode 和 UTF-8 有何区别？</a></h3><hr>
+<h5 id="关键字"><a href="#关键字" class="headerlink" title="关键字"></a>关键字</h5><h5 id="比特（bit）-字节（byte）-ASCII编码-GB2312-GBK-GB18030-Unicode-UTF-8"><a href="#比特（bit）-字节（byte）-ASCII编码-GB2312-GBK-GB18030-Unicode-UTF-8" class="headerlink" title="比特（bit） 字节（byte） ASCII编码 GB2312 GBK GB18030 Unicode UTF-8"></a>比特（bit） 字节（byte） ASCII编码 GB2312 GBK GB18030 Unicode UTF-8</h5><h5 id="廖大神已经写得很详细啦，我这边算做个非常简单的个人总结，知道-一下各个编码直接的情况及关系等，详细请参考廖大神博客及查找网上各种资料。"><a href="#廖大神已经写得很详细啦，我这边算做个非常简单的个人总结，知道-一下各个编码直接的情况及关系等，详细请参考廖大神博客及查找网上各种资料。" class="headerlink" title="廖大神已经写得很详细啦，我这边算做个非常简单的个人总结，知道 一下各个编码直接的情况及关系等，详细请参考廖大神博客及查找网上各种资料。"></a>廖大神已经写得很详细啦，我这边算做个非常简单的个人总结，知道 一下各个编码直接的情况及关系等，详细请参考廖大神博客及查找网上各种资料。</h5><h5 id="美国人刚开始把自己的大小写英文字母，数字，一些符号总共127个进行编码，成为ASCII编码，后来计算机用的多了，128-255这一页也被用了，称为扩展字符集。后来中国人用计算机时，已经没有字节状态来表示汉字了，所以出现了GB2312，一个小于127的字符跟ASCII一样，但是两个大于127一起时，表示一个汉字。但是汉字太多，就有了GBK，又由于少数名族的文字，扩展至GB18030。。。。。。（此时内心是崩溃的）"><a href="#美国人刚开始把自己的大小写英文字母，数字，一些符号总共127个进行编码，成为ASCII编码，后来计算机用的多了，128-255这一页也被用了，称为扩展字符集。后来中国人用计算机时，已经没有字节状态来表示汉字了，所以出现了GB2312，一个小于127的字符跟ASCII一样，但是两个大于127一起时，表示一个汉字。但是汉字太多，就有了GBK，又由于少数名族的文字，扩展至GB18030。。。。。。（此时内心是崩溃的）" class="headerlink" title="美国人刚开始把自己的大小写英文字母，数字，一些符号总共127个进行编码，成为ASCII编码，后来计算机用的多了，128-255这一页也被用了，称为扩展字符集。后来中国人用计算机时，已经没有字节状态来表示汉字了，所以出现了GB2312，一个小于127的字符跟ASCII一样，但是两个大于127一起时，表示一个汉字。但是汉字太多，就有了GBK，又由于少数名族的文字，扩展至GB18030。。。。。。（此时内心是崩溃的）"></a>美国人刚开始把自己的大小写英文字母，数字，一些符号总共127个进行编码，成为ASCII编码，后来计算机用的多了，128-255这一页也被用了，称为扩展字符集。后来中国人用计算机时，已经没有字节状态来表示汉字了，所以出现了GB2312，一个小于127的字符跟ASCII一样，但是两个大于127一起时，表示一个汉字。但是汉字太多，就有了GBK，又由于少数名族的文字，扩展至GB18030。。。。。。（此时内心是崩溃的）</h5><h5 id="因为全世界上语言太多，所以出现了Unicode，-就是将所有语言统一到一套编码。-最常用的是两个字节表示一个字符，如果太偏僻就用4个字节。但是Unicode编码比ASCII编码需要多一倍的存储空间，在存储和传输上很不划算，所以出现了UTF-8编码，UTF-8-根据数字大小编码成1-6个字节，英文字母编码成1个字节，汉字通常是3个字节，太生僻的用4-6个字节。"><a href="#因为全世界上语言太多，所以出现了Unicode，-就是将所有语言统一到一套编码。-最常用的是两个字节表示一个字符，如果太偏僻就用4个字节。但是Unicode编码比ASCII编码需要多一倍的存储空间，在存储和传输上很不划算，所以出现了UTF-8编码，UTF-8-根据数字大小编码成1-6个字节，英文字母编码成1个字节，汉字通常是3个字节，太生僻的用4-6个字节。" class="headerlink" title="因为全世界上语言太多，所以出现了Unicode， 就是将所有语言统一到一套编码。 最常用的是两个字节表示一个字符，如果太偏僻就用4个字节。但是Unicode编码比ASCII编码需要多一倍的存储空间，在存储和传输上很不划算，所以出现了UTF-8编码，UTF-8 根据数字大小编码成1-6个字节，英文字母编码成1个字节，汉字通常是3个字节，太生僻的用4-6个字节。"></a>因为全世界上语言太多，所以出现了Unicode， 就是将所有语言统一到一套编码。 最常用的是两个字节表示一个字符，如果太偏僻就用4个字节。但是Unicode编码比ASCII编码需要多一倍的存储空间，在存储和传输上很不划算，所以出现了UTF-8编码，UTF-8 根据数字大小编码成1-6个字节，英文字母编码成1个字节，汉字通常是3个字节，太生僻的用4-6个字节。</h5><h5 id="在计算机内存中，统一使用Unicode编码，当需要保存到硬盘或者需要传输的时候，就转换为UTF-8编码。"><a href="#在计算机内存中，统一使用Unicode编码，当需要保存到硬盘或者需要传输的时候，就转换为UTF-8编码。" class="headerlink" title="在计算机内存中，统一使用Unicode编码，当需要保存到硬盘或者需要传输的时候，就转换为UTF-8编码。"></a>在计算机内存中，统一使用Unicode编码，当需要保存到硬盘或者需要传输的时候，就转换为UTF-8编码。</h5><h5 id="浏览网页的时候，服务器会把动态生成的Unicode内容转换为UTF-8再传输到浏览器；所以你看到很多网页的源码上会有类似-lt-meta-charset-quot-UTF-8-quot-gt-的信息，表示该网页正是用的UTF-8编码。"><a href="#浏览网页的时候，服务器会把动态生成的Unicode内容转换为UTF-8再传输到浏览器；所以你看到很多网页的源码上会有类似-lt-meta-charset-quot-UTF-8-quot-gt-的信息，表示该网页正是用的UTF-8编码。" class="headerlink" title="浏览网页的时候，服务器会把动态生成的Unicode内容转换为UTF-8再传输到浏览器；所以你看到很多网页的源码上会有类似&lt;meta charset=&quot;UTF-8&quot; /&gt;的信息，表示该网页正是用的UTF-8编码。"></a>浏览网页的时候，服务器会把动态生成的Unicode内容转换为UTF-8再传输到浏览器；所以你看到很多网页的源码上会有类似<code>&lt;meta charset=&quot;UTF-8&quot; /&gt;</code>的信息，表示该网页正是用的UTF-8编码。</h5><h2 id="2-python数据类型"><a href="#2-python数据类型" class="headerlink" title="2. python数据类型"></a>2. python数据类型</h2><h3 id="1-Numer"><a href="#1-Numer" class="headerlink" title="1. Numer"></a>1. Numer</h3><h4 id="1-1-整数"><a href="#1-1-整数" class="headerlink" title="1.1 整数"></a>1.1 整数</h4><p>十进制： 1，45，12等；<br>二进制： 0b开头， ob11;<br>八进制: 0o开头， 0o13;<br>十六进制: 0x开头， 0x1a;</p>
+<p><strong>进制转换</strong></p>
+<pre><code>转为2进制
+&gt;&gt;&gt; bin(10）
+
+转为10进制
+&gt;&gt;&gt; int(0x1a) 
+
+转为16进制
+&gt;&gt;&gt; hex(10)  
+
+转为8进制
+&gt;&gt;&gt; oct(8)
+</code></pre><h4 id="1-2-浮点数"><a href="#1-2-浮点数" class="headerlink" title="1.2 浮点数"></a>1.2 浮点数</h4><p>   之所以称为浮点数，是因为按照科学记数法表示时，一个浮点数的小数点位置是可变的。</p>
+<h3 id="2-字符串"><a href="#2-字符串" class="headerlink" title="2. 字符串"></a>2. 字符串</h3><p>字符串是以单引号’或双引号”括起来的任意文本。</p>
+<p>转义字符 （\n,\t…）<br>原始字符串：r’…’<br>多行字符串：’’’xxx’’’</p>
+<p>单引号，双引号，三引号的区别：</p>
+<p>单引号和双引号是等效的，主要用来表示字符串，如果要换行，需要符号转移字符\；<br>三单引号:可以表示字符串，一般用来输入多行文本,或者用于大段的注释<br>三双引号：一般用在类里面,用来注释类,这样省的写文档,直接用类的对象<strong>doc</strong>访问获得文档。</p>
+<h3 id="3-布尔值"><a href="#3-布尔值" class="headerlink" title="3. 布尔值"></a>3. 布尔值</h3><p>True:非0，非空<br>False：0，空，None；</p>
+
+      
+    </div>
+    
+    
+    
+	
+	 
+    
+	  <div>
+       <div>
+    
+        <div style="text-align:center;color: #ccc;font-size:14px;">-------------本文结束<i class="fa fa-paw"></i>感谢您的阅读-------------</div>
+    
+</div>
+	  </div>
+    
+    
+	
+	    <div>
+        
+		</div>
+    
+    
+
+    
+
+    
+
+    
+
+    <footer class="post-footer">
+      
+        <div class="post-tags">
+          
+            <a href="/tags/字符编码-python数据类型/" rel="tag"><i class="fa fa-tag"></i> 字符编码 python数据类型</a>
+          
+        </div>
+      
+
+      
+      
+      
+
+      
+        <div class="post-nav">
+          <div class="post-nav-next post-nav-item">
+            
+              <a href="/2017/10/13/第一篇关于Python爬虫/" rel="next" title="第一篇关于Python爬虫">
+                <i class="fa fa-chevron-left"></i> 第一篇关于Python爬虫
+              </a>
+            
+          </div>
+
+          <span class="post-nav-divider"></span>
+
+          <div class="post-nav-prev post-nav-item">
+            
+          </div>
+        </div>
+      
+
+      
+      
+    </footer>
+  </div>
+  
+  
+  
+  </article>
+
+
+
+    <div class="post-spread">
+      
+        <!-- JiaThis Button BEGIN -->
+<div class="jiathis_style">
+<span class="jiathis_txt">分享到：</span>
+<a class="jiathis_button_fav">收藏夹</a>
+<a class="jiathis_button_copy">复制网址</a>
+<a class="jiathis_button_email">邮件</a>
+<a class="jiathis_button_weixin">微信</a>
+<a class="jiathis_button_qzone">QQ空间</a>
+<a class="jiathis_button_tqq">腾讯微博</a>
+<a class="jiathis_button_douban">豆瓣</a>
+<a class="jiathis_button_share">一键分享</a>
+
+<a href="http://www.jiathis.com/share?uid=2140465" class="jiathis jiathis_txt jiathis_separator jtico jtico_jiathis" target="_blank">更多</a>
+<a class="jiathis_counter_style"></a>
+</div>
+<script type="text/javascript" >
+var jiathis_config={
+  data_track_clickback:true,
+  summary:"",
+  shortUrl:false,
+  hideMore:false
+}
+</script>
+<script type="text/javascript" src="http://v3.jiathis.com/code/jia.js?uid=" charset="utf-8"></script>
+<!-- JiaThis Button END -->
+      
+    </div>
+  </div>
+
+
+          </div>
+          
+
+
+          
+
+  
+    <div class="comments" id="comments">
+      <div id="disqus_thread">
+        <noscript>
+          Please enable JavaScript to view the
+          <a href="https://disqus.com/?ref_noscript">comments powered by Disqus.</a>
+        </noscript>
+      </div>
+    </div>
+
+  
+
+
+        </div>
+        
+          
+  
+  <div class="sidebar-toggle">
+    <div class="sidebar-toggle-line-wrap">
+      <span class="sidebar-toggle-line sidebar-toggle-line-first"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-middle"></span>
+      <span class="sidebar-toggle-line sidebar-toggle-line-last"></span>
+    </div>
+  </div>
+
+  <aside id="sidebar" class="sidebar">
+    
+    <div class="sidebar-inner">
+
+      
+
+      
+        <ul class="sidebar-nav motion-element">
+          <li class="sidebar-nav-toc sidebar-nav-active" data-target="post-toc-wrap">
+            文章目录
+          </li>
+          <li class="sidebar-nav-overview" data-target="site-overview-wrap">
+            站点概览
+          </li>
+        </ul>
+      
+
+      <section class="site-overview-wrap sidebar-panel">
+        <div class="site-overview">
+          <div class="site-author motion-element" itemprop="author" itemscope itemtype="http://schema.org/Person">
+            
+              <img class="site-author-image" itemprop="image"
+                src="/images/avatar.jpg"
+                alt="我爱吃西瓜" />
+            
+              <p class="site-author-name" itemprop="name">我爱吃西瓜</p>
+              <p class="site-description motion-element" itemprop="description">网络管理转爬虫开发</p>
+          </div>
+
+          <nav class="site-state motion-element">
+
+            
+              <div class="site-state-item site-state-posts">
+              
+                <a href="/archives">
+              
+                  <span class="site-state-item-count">2</span>
+                  <span class="site-state-item-name">日志</span>
+                </a>
+              </div>
+            
+
+            
+
+            
+              
+              
+              <div class="site-state-item site-state-tags">
+                
+                  <span class="site-state-item-count">1</span>
+                  <span class="site-state-item-name">标签</span>
+                
+              </div>
+            
+
+          </nav>
+
+          
+
+          <div class="links-of-author motion-element">
+            
+              
+                <span class="links-of-author-item">
+                  <a href="https://github.com/robber007" target="_blank" title="GitHub">
+                    
+                      <i class="fa fa-fw fa-github"></i>GitHub</a>
+                </span>
+              
+            
+          </div>
+
+          
+          
+
+          
+          
+
+          
+
+        </div>
+      </section>
+
+      
+      <!--noindex-->
+        <section class="post-toc-wrap motion-element sidebar-panel sidebar-panel-active">
+          <div class="post-toc">
+
+            
+              
+            
+
+            
+              <div class="post-toc-content"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#1-大概说字符编码"><span class="nav-number">1.</span> <span class="nav-text">1.大概说字符编码</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#参考资料"><span class="nav-number">1.1.</span> <span class="nav-text">参考资料</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#廖雪峰博客—字符编码"><span class="nav-number">1.2.</span> <span class="nav-text">廖雪峰博客—字符编码</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#知乎–Unicode-和-UTF-8-有何区别？"><span class="nav-number">1.3.</span> <span class="nav-text">知乎–Unicode 和 UTF-8 有何区别？</span></a><ol class="nav-child"><li class="nav-item nav-level-5"><a class="nav-link" href="#关键字"><span class="nav-number">1.3.0.1.</span> <span class="nav-text">关键字</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#比特（bit）-字节（byte）-ASCII编码-GB2312-GBK-GB18030-Unicode-UTF-8"><span class="nav-number">1.3.0.2.</span> <span class="nav-text">比特（bit） 字节（byte） ASCII编码 GB2312 GBK GB18030 Unicode UTF-8</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#廖大神已经写得很详细啦，我这边算做个非常简单的个人总结，知道-一下各个编码直接的情况及关系等，详细请参考廖大神博客及查找网上各种资料。"><span class="nav-number">1.3.0.3.</span> <span class="nav-text">廖大神已经写得很详细啦，我这边算做个非常简单的个人总结，知道 一下各个编码直接的情况及关系等，详细请参考廖大神博客及查找网上各种资料。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#美国人刚开始把自己的大小写英文字母，数字，一些符号总共127个进行编码，成为ASCII编码，后来计算机用的多了，128-255这一页也被用了，称为扩展字符集。后来中国人用计算机时，已经没有字节状态来表示汉字了，所以出现了GB2312，一个小于127的字符跟ASCII一样，但是两个大于127一起时，表示一个汉字。但是汉字太多，就有了GBK，又由于少数名族的文字，扩展至GB18030。。。。。。（此时内心是崩溃的）"><span class="nav-number">1.3.0.4.</span> <span class="nav-text">美国人刚开始把自己的大小写英文字母，数字，一些符号总共127个进行编码，成为ASCII编码，后来计算机用的多了，128-255这一页也被用了，称为扩展字符集。后来中国人用计算机时，已经没有字节状态来表示汉字了，所以出现了GB2312，一个小于127的字符跟ASCII一样，但是两个大于127一起时，表示一个汉字。但是汉字太多，就有了GBK，又由于少数名族的文字，扩展至GB18030。。。。。。（此时内心是崩溃的）</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#因为全世界上语言太多，所以出现了Unicode，-就是将所有语言统一到一套编码。-最常用的是两个字节表示一个字符，如果太偏僻就用4个字节。但是Unicode编码比ASCII编码需要多一倍的存储空间，在存储和传输上很不划算，所以出现了UTF-8编码，UTF-8-根据数字大小编码成1-6个字节，英文字母编码成1个字节，汉字通常是3个字节，太生僻的用4-6个字节。"><span class="nav-number">1.3.0.5.</span> <span class="nav-text">因为全世界上语言太多，所以出现了Unicode， 就是将所有语言统一到一套编码。 最常用的是两个字节表示一个字符，如果太偏僻就用4个字节。但是Unicode编码比ASCII编码需要多一倍的存储空间，在存储和传输上很不划算，所以出现了UTF-8编码，UTF-8 根据数字大小编码成1-6个字节，英文字母编码成1个字节，汉字通常是3个字节，太生僻的用4-6个字节。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#在计算机内存中，统一使用Unicode编码，当需要保存到硬盘或者需要传输的时候，就转换为UTF-8编码。"><span class="nav-number">1.3.0.6.</span> <span class="nav-text">在计算机内存中，统一使用Unicode编码，当需要保存到硬盘或者需要传输的时候，就转换为UTF-8编码。</span></a></li><li class="nav-item nav-level-5"><a class="nav-link" href="#浏览网页的时候，服务器会把动态生成的Unicode内容转换为UTF-8再传输到浏览器；所以你看到很多网页的源码上会有类似-lt-meta-charset-quot-UTF-8-quot-gt-的信息，表示该网页正是用的UTF-8编码。"><span class="nav-number">1.3.0.7.</span> <span class="nav-text">浏览网页的时候，服务器会把动态生成的Unicode内容转换为UTF-8再传输到浏览器；所以你看到很多网页的源码上会有类似<meta charset="UTF-8" />的信息，表示该网页正是用的UTF-8编码。</span></a></li></ol></li></ol></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#2-python数据类型"><span class="nav-number">2.</span> <span class="nav-text">2. python数据类型</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#1-Numer"><span class="nav-number">2.1.</span> <span class="nav-text">1. Numer</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#1-1-整数"><span class="nav-number">2.1.1.</span> <span class="nav-text">1.1 整数</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#1-2-浮点数"><span class="nav-number">2.1.2.</span> <span class="nav-text">1.2 浮点数</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#2-字符串"><span class="nav-number">2.2.</span> <span class="nav-text">2. 字符串</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#3-布尔值"><span class="nav-number">2.3.</span> <span class="nav-text">3. 布尔值</span></a></li></ol></li></ol></div>
+            
+
+          </div>
+        </section>
+      <!--/noindex-->
+      
+
+      
+
+    </div>
+  </aside>
+
+
+        
+      </div>
+    </main>
+
+    <footer id="footer" class="footer">
+      <div class="footer-inner">
+        <script async src="https://dn-lbstatics.qbox.me/busuanzi/2.3/busuanzi.pure.mini.js">
+</script>
+<div class="copyright">&copy; <span itemprop="copyrightYear">2017</span>
+  <span class="with-love">
+    <i class="fa fa-user"></i>
+  </span>
+  <span class="author" itemprop="copyrightHolder">我爱吃西瓜</span>
+
+  
+</div>
+
+
+<div class="powered-by">
+<i class="fa fa-user-md"></i><span id="busuanzi_container_site_pv">
+  本站访客数:<span id="busuanzi_value_site_pv"></span>
+</span>
+</div>
+.
+<!--
+
+  <div class="powered-by">由 <a class="theme-link" target="_blank" href="https://hexo.io">Hexo</a> 强力驱动</div>
+
+
+
+  <span class="post-meta-divider">|</span>
+
+
+
+  <div class="theme-info">主题 &mdash; <a class="theme-link" target="_blank" href="https://github.com/iissnan/hexo-theme-next">NexT.Mist</a> v5.1.3</div>
+
+-->
+
+
+
+<div class="theme-info">
+  <div class="powered-by"></div>
+  <span class="post-count">博客全站共1.4k字</span>
+</div>
+
+        
+
+
+
+
+
+
+
+        
+      </div>
+    </footer>
+
+    
+      <div class="back-to-top">
+        <i class="fa fa-arrow-up"></i>
+        
+      </div>
+    
+
+    
+
+  </div>
+
+  
+
+<script type="text/javascript">
+  if (Object.prototype.toString.call(window.Promise) !== '[object Function]') {
+    window.Promise = null;
+  }
+</script>
+
+
+
+
+
+
+
+
+
+  
+
+
+  
+
+
+
+
+
+
+
+
+
+
+
+  
+  <script type="text/javascript" src="/lib/jquery/index.js?v=2.1.3"></script>
+
+  
+  <script type="text/javascript" src="/lib/fastclick/lib/fastclick.min.js?v=1.0.6"></script>
+
+  
+  <script type="text/javascript" src="/lib/jquery_lazyload/jquery.lazyload.js?v=1.9.7"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/velocity/velocity.ui.min.js?v=1.2.1"></script>
+
+  
+  <script type="text/javascript" src="/lib/fancybox/source/jquery.fancybox.pack.js?v=2.1.5"></script>
+
+  
+  <script type="text/javascript" src="/lib/canvas-nest/canvas-nest.min.js"></script>
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/utils.js?v=5.1.3"></script>
+
+  <script type="text/javascript" src="/js/src/motion.js?v=5.1.3"></script>
+
+
+
+  
+  
+
+  
+  <script type="text/javascript" src="/js/src/scrollspy.js?v=5.1.3"></script>
+<script type="text/javascript" src="/js/src/post-details.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  <script type="text/javascript" src="/js/src/bootstrap.js?v=5.1.3"></script>
+
+
+
+  
+
+
+  
+
+    
+      <script id="dsq-count-scr" src="https://.disqus.com/count.js" async></script>
+    
+
+    
+      <script type="text/javascript">
+        var disqus_config = function () {
+          this.page.url = 'http://robber007.github.io/2017/10/18/Python基础(1)/';
+          this.page.identifier = '2017/10/18/Python基础(1)/';
+          this.page.title = 'Python基础(1)';
+        };
+        var d = document, s = d.createElement('script');
+        s.src = 'https://.disqus.com/embed.js';
+        s.setAttribute('data-timestamp', '' + +new Date());
+        (d.head || d.body).appendChild(s);
+      </script>
+    
+
+  
+
+
+
+
+	
+
+
+
+
+
+  
+
+
+
+
+
+  
+    <script type="text/javascript">
+      (function(d, s) {
+        var j, e = d.getElementsByTagName(s)[0];
+        if (typeof LivereTower === 'function') { return; }
+        j = d.createElement(s);
+        j.src = 'https://cdn-city.livere.com/js/embed.dist.js';
+        j.async = true;
+        e.parentNode.insertBefore(j, e);
+      })(document, 'script');
+    </script>
+  
+
+
+
+
+  
+    <script type="text/javascript">
+    (function(){
+      var appid = 'cythl0ESU';
+      var conf = 'ebcbbe5e75958120d983fff78ebd74c8';
+      var width = window.innerWidth || document.documentElement.clientWidth;
+      if (width < 960) {
+      window.document.write('<script id="changyan_mobile_js" charset="utf-8" type="text/javascript" src="https://changyan.sohu.com/upload/mobile/wap-js/changyan_mobile.js?client_id=' + appid + '&conf=' + conf + '"><\/script>'); } else { var loadJs=function(d,a){var c=document.getElementsByTagName("head")[0]||document.head||document.documentElement;var b=document.createElement("script");b.setAttribute("type","text/javascript");b.setAttribute("charset","UTF-8");b.setAttribute("src",d);if(typeof a==="function"){if(window.attachEvent){b.onreadystatechange=function(){var e=b.readyState;if(e==="loaded"||e==="complete"){b.onreadystatechange=null;a()}}}else{b.onload=a}}c.appendChild(b)};loadJs("https://changyan.sohu.com/upload/changyan.js",function(){
+        window.changyan.api.config({appid:appid,conf:conf})});
+      }
+    })();
+    </script>
+    <script type="text/javascript" src="https://assets.changyan.sohu.com/upload/plugins/plugins.count.js"></script>
+  
+
+
+
+
+<!-- LOCAL: You can save these files to your site and update links -->
+    
+        
+        <link rel="stylesheet" href="https://aimingoo.github.io/gitmint/style/default.css">
+        <script src="https://aimingoo.github.io/gitmint/dist/gitmint.browser.js"></script>
+    
+<!-- END LOCAL -->
+
+    
+
+    
+      <script type="text/javascript">
+      function renderGitment(){
+        var gitment = new Gitmint({
+            id: document.location.href, 
+            owner: 'robber007# MUST HAVE, Your Github ID',
+            repo: 'robber007.github.io# MUST HAVE, The repo you use to store Gitment comments',
+            
+            lang: "" || navigator.language || navigator.systemLanguage || navigator.userLanguage,
+            
+            oauth: {
+            
+            
+                client_secret: '615557176483e1dd11981f6cd85f5f8d2a4388b5# EITHER this or proxy_gateway, Github access secret token for the Gitment',
+            
+                client_id: '2b52cd4123660b0a71d3'
+            }});
+        gitment.render('gitment-container');
+      }
+
+      
+      renderGitment();
+      
+      </script>
+    
+
+
+
+
+
+
+
+  
+
+
+
+
+
+  
+
+  
+
+  
+  
+
+  
+
+  
+
+  
+
+</body>
+</html>
+<!-- 页面点击小红心 -->
+<script type="text/javascript" src="/js/src/love.js"></script>
